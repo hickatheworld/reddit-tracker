@@ -34,7 +34,7 @@ async function refresh() {
 			labels.push(label);
 		}
 	} else {
-		console.log(colors.red(`Duplicate label: ${label}`));
+		console.log(colors.red(`Missing track.json`));
 		process.exit(1);
 	}
 	if (fs.existsSync('save.json')) {
