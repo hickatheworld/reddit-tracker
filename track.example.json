@@ -1,0 +1,8 @@
+[{
+	"label": "Each tracked item must have an unique label for the save file.",
+	"subreddit": "The subreddit to track from. (without r/ prefix)",
+	"type": "'keyword': 'To track for a specific keyword' OR 'flair': To track for a specific flair",
+	"query": "The keyword/flair to track"
+}, 
+{/*... */}
+]
