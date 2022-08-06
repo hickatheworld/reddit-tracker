@@ -65,5 +65,5 @@ async function refresh() {
 	refresh();
 	setInterval(async () => {
 		await refresh();
-	}, 10_000);
+	}, 60_000);
 })();
