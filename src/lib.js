@@ -9,6 +9,7 @@ class Item {
 		this.link = raw.permalink;
 		this.url = raw.url;
 		this.sub = raw.subreddit;
+		this.date = raw.created_utc;
 	}
 
 	toString() {

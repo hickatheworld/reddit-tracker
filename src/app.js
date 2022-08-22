@@ -7,16 +7,23 @@ let TRACK;
 
 async function refresh() {
 	for (const t of TRACK) {
-		const result = await search(t.subreddit, t.type, t.query, SAVE[t.label].lastItem);
+		let result = await search(t.subreddit, t.type, t.query, SAVE[t.label].lastItem);
+		if (!result.length) {
+			result = await search(t.subreddit, t.type, t.query);
+			const last = SAVE[t.label].date;
+			if (!last) continue;
+			result = result.filter(u => u.date > last);
+			}
 		if (result.length) {
-			console.log(colors.bgCyan('New items for ' + t.label));
-			for (const item of result) {
-				console.log(colors.green(item.toString()));
-				SAVE[t.label].lastItem = item.name;
+		console.log(colors.bgCyan('New items for ' + t.label));
+		for (const item of result) {
+			console.log(colors.green(item.toString()));
+			SAVE[t.label].lastItem = item.name;
+			SAVE[t.label].date = item.date;	
+			fs.writeFileSync('save.json', JSON.stringify(SAVE, null, 2));
 			}
 		}
 	}
-	fs.writeFileSync('save.json', JSON.stringify(SAVE, null, 2));
 }
 
 (async () => {
@@ -53,6 +60,7 @@ async function refresh() {
 		SAVE[t.label] = {};
 		if (lastItem) {
 			SAVE[t.label].lastItem = lastItem.name;
+			SAVE[t.label].date = lastItem.date;
 			console.log(colors.green(`Last item for ${t.label} is ${lastItem.name}`));
 		} else {
 			console.log(colors.red(`No items for ${t.label}`));
