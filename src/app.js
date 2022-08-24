@@ -15,13 +15,15 @@ async function refresh() {
 			result = result.filter(u => u.date > last);
 			}
 		if (result.length) {
-		console.log(colors.bgCyan('New items for ' + t.label));
-		for (const item of result) {
-			console.log(colors.green(item.toString()));
-			SAVE[t.label].lastItem = item.name;
-			SAVE[t.label].date = item.date;	
-			fs.writeFileSync('save.json', JSON.stringify(SAVE, null, 2));
-			}
+			console.log(colors.bgCyan('New items for ' + t.label));
+			for (const item of result) {
+				console.log(colors.green(item.toString()));
+				SAVE[t.label].lastItem = item.name;
+				SAVE[t.label].date = item.date;	
+				fs.writeFileSync('save.json', JSON.stringify(SAVE, null, 2));
+				}
+		} else {
+			console.log(colors.bgRed('No item for ' + t.label));
 		}
 	}
 }
@@ -71,7 +73,4 @@ async function refresh() {
 	console.log(colors.bgGreen('READY'));
 	console.log();
 	refresh();
-	setInterval(async () => {
-		await refresh();
-	}, 60_000);
 })();
